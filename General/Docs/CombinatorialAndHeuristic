@@ -1,0 +1,38 @@
+
+
+==> For backtracking, usually DFS is preferred over BFS, because it takes less space. DFS takes space proportional to height of graph from source to current node, while BFS requires queue of all nodes on current height. Normally, the width grows as depth increases.
+
+==> Backtracking : 
+  Systematically enumerate all possible configurations of search space
+  ==> Generate all possible configuration exactly once
+
+    -> All possible arragements of object (permutation)
+    -> All possible way of builing a collection (subset)
+    -> enumerating all spanning tree of graph
+    -> All paths between vertices : NP Hard
+    -> All possible ways to partition vertices in color graph
+
+  --> Extend partial solution by considering all possible extensions, but check if solution is complete before doing so
+  --> It constructs a tree of partial solutions and all remains is to DFS search this tree
+       backtrack (a, k, input):
+          is_a_solution(a,k,input) == True
+          	output_solution
+          	return
+
+          candidates = build_candidates_to_extend_soluton(a,k,input)
+          for candidate in candidates:
+          	a[k] = c[i]
+          	make_move(a,k,input)
+          	backtrack(a, k+1, input)
+          	unmake_move(a,k,input)
+
+
+        input : general information about solution, like value of k when solution is done
+        build_candidates_to_extend_soluton : given solution with k-1 positions, constructs all possible candidates for kth solution
+        make_move : modify data structure as per the kth move
+        unmake_move : undo the modification in data structure
+
+
+==> Pruning : 
+    -> look ahead and remove partial solution that will not yield any result
+    -> In soduku, if we fill a number in row, and then realize that nothing can be filled corresponding 3x3 matrix, we abondone that filling row        

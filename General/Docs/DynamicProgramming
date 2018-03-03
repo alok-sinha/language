@@ -1,0 +1,80 @@
+
+
+
+1. Look for sub problems
+  1.a Find smaller sub problems needed for solving current sub probplems
+  1.b Look for Overlaps, some sub problems that are solved again and again
+2. Write functional/mathematical relation
+  2.a Find all possible relations and dependancies to represent sub probpem relation. This is basically  findings graph edges from a given sub problem to sub problems it depends on. 
+3. Write Init condition
+  3.a Make sure index 0 is taken care
+4. Compute bottom up
+
+5. Translate to code
+
+
+==> DP works on combinatorial objects with inherent left to right order in components
+    -> String, 
+    -> Rooted trees, 
+    -> Polygons
+    -> Integer sequence
+
+==> A dynamic-programming approach runs in polynomial time when 
+    -> the number of distinct subproblems involved is polynomial in the input size 
+    -> and we can solve each such subproblem in polynomial time.
+
+==> Two approaches of DP:
+  1. Top-Down : Memoization
+      This is recursion with storing results in cache. In each recursive call, check chache if we already have answer to the problem. If yes, return the result from cache, else compute a new one.
+  2. Bottom up:
+      This relies on ordering of sub problem, bigger sub problem is solved using smaller ones. So compute sub problems from smaller to bigger. This still requires cache to save the smaller problems, but not stack calls needed for recursion.   
+
+==> Asymptotically, both has same run time. But in some case, Memoization may not solve all sub problems, whereas bottom up will do it.
+    -> Example : LCS and edit distance. This choses which subproblem to solve based on condition of a[i] = b[j]
+
+==> However, bottom-up has smaller constant factor as top-down has overhead of calling  procedure calls.
+
+==> Sub problem graph : 
+    -> We can think of the subproblem graph as a “reduced” or “collapsed” version of the recursion tree for the top-down recursive method, in which we coalesce all nodes for the same subproblem into a single vertex and direct all edges from parent to child.
+    -> top-down : Depth search search in subproblem graph. So it may skip some nodes not featuring in DFS.
+    -> botttom-up : Building graph in reverse topological sort order. Can not build a node unless all incoming edges are built. 
+    -> Running time : 
+       - sum of all time needed to solve each sub problem
+       - time to solve one sub problem is number of incoming/outgoing edges -> Number of edges
+       - running time = (No of vertices (no of distinct sub problems)) * (average time to solve each problems)
+
+===> Subproblem independence
+    -> DP works only if sub problems for a given problems are independent, meaning one sub probleme under one problem does not affect the other sub problems under same problem. 
+     In terms of sub problem graph, sub problems that problem is pointing to, does not have pointers among themselves.
+     -> THIS MEANS THAT GRAPH IS A DAG
+
+
+==> Optimal substructure
+  --> Make a choice between multiple choices : leaves one or more subproblems to be solved
+  --> Choice is given to you, you don't worry about making this choice
+  --> Given the choice, which sub problems occures as a result of this choice and how to characterize the resulting sub problem space
+      problem space : Keep it simple and expand only when necessary
+  --> Two key differences of optimal sub structure across problems:
+     1. How many sub problems are needed to solve a problem
+        rod-cutting problem  :  1 sub problem, and i choices. 
+        matrix multiplication : 2 sub problems, and j-i choices to where to split
+     2. How many choices we have to determine which optimal solution(s) to use
+
+==> Running time : 
+    -> Informally, the running time of a dynamic-programming algorithm depends on the product of two factors: the number of subproblems overall and how many choices we look at for each subproblem.
+       -> In rod cutting, we had ‚.n/ subproblems overall, and at most n choices to examine for each, yielding an O.n2/ running time. Matrix-chain multiplication had ‚.n2/ subproblems overall, and in each we had at most n  1 choices, giving an O.n3/ running time (actually, a ‚.n3/ running time, by Exercise 15.2-5).
+
+
+==> When does optimal sub structure apply, and when it does not
+    -> 
+
+
+Dynamic Programming vs Greedy
+=============================
+
+DP -> Find opitmal sub problems and than make informered choice
+DP -> Make a choice and then solve subproblems      
+
+
+
+

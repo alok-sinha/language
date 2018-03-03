@@ -1,0 +1,27 @@
+
+
+==> Two cases during recursion:
+    -> Recursive Case : Subprobpem is large enough to be solved by recursion
+    -> Base Case : Subproblem is small enough to not call recursion. We say recursion has bottomed out
+    -> Combine case : Subproblem not same as original recursive problem
+
+
+==> Recurrance relation:
+    --> If  divide and conquer algo breaks  n size problen into a sub problems each of size n/b, and if divide and combine stage takes f(n) time, then 
+        T(n)  = a*T(n/b) + f(n)
+    --> The resulting asymptotic running time from recurrence relation is Theta, O or Omega, depends releation with T(n). 
+        --> Theta : T(n) =
+        --> O : T(n) <=
+        --> Omega : T(n) >=
+    --> Typically T(n) is assumed to be small for small n. So we ignore the floor and ceiling of n/2. This may be put off the T(n) by a constant factor, but not order of growth.
+    
+
+==> Three ways to solve recurrence relation
+    --> Substitution method
+    --> Recurrence tree
+    --> Master method
+         T(n) = a*T(n/b) + O(n^d)
+
+         T(n) = O(n^d) , if d > log(a) base b
+              = O(n^dlog(n)), if d = log(a) base b
+              = O(n^log(a)), if d < log(a) base b

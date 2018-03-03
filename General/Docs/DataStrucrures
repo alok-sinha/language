@@ -1,0 +1,101 @@
+
+==> Basics
+   --> Arrays
+
+   --> Linked list
+
+   --> Stacks
+
+   --> Queue
+
+   --> Strings
+       --> Suffix/Prefix tree(Tries)
+       --> Suffix Trie uses:
+          -> Find substring q in text t
+          -> Find longest substring among set of strings
+          -> Longest palindrome
+          -> Suffix array : 
+              -> Shorter space, store suffixes of a string in sorted manner in array. 
+              -> Build a suffix trie first, then do a inorder traversal. 
+              -> Store index of common prefix so that string comparison during binary search does not take more than q comparisions.
+          
+
+
+
+==> Rooted Trees:
+
+   --> Binary tree : Two childs, right and left
+   -->  N-child tree : N children
+     --> We don't know how many children to allocate memory for
+     --> even if we know and pre-allocate, most of node will have lesser number of child and will be wasting memory
+   --> Alternative : Left child, right siblings
+     -> Left child : Pointer to left child
+     -> Right sibling : pointed to right sibling to this node : So we allocate node as it comes.     
+   --> Binary search tree
+
+   --> Tourament tree : Alternative of priority queue for merging sorted arrays 
+     --> Winner tree
+     --> Loser tree
+
+   --> Spatial data structures : KD trees  
+
+==> Graph
+
+
+==> Dictionary
+
+  --> Set
+     --> Union-find : For maintaining set paritions. 
+
+  --> Hash Table
+
+  --> Binary Search Tree:
+    -> Randomized binary tree has expected height of O(logn)
+    -> left, right, parent pointers
+    -> Keys are ordered in left, parent, right order
+    -> Inorder walk : Theta(n)     
+
+  --> Splay Tree
+
+  --> B Trees
+   -> Good for external binary search : Extension of binary search tree to disk based env
+      --> Store large number of key-object pair
+   -> Extension of balanced binary search trees : Always balanced
+   -> Each node contains data of capacity B, where B is block size of data exchange between memory and disk.
+      --> Each node contains bunch of numbers in sorted order, so when a node is read, it reads many numbers to search into
+   -> Each query is log(n,B), Node with 100 items, 1 billon objects can be stored using 4-5 levels of B tree
+   -> Each node is at least half full
+   -> Child pointers are really page numbers to read the page
+   
+  --> Skip list:
+      -> Bunch of lists, increading in size
+      -> Start with smaller list and move to higher ones based on key values
+
+   
+
+==> Priority queue
+    --> Can be build using:
+    	--> Sorted array: 
+          --> Insert, O(n), delete and extract min is O(1)
+          --> Works well if insertions are far less
+
+      --> Bounded height priority queue:
+          --> Given keys are in limited and short range
+          --> Have a array of size n, index it by key. Maintain linkedlist or counter to store objects with same key
+          --> Have topmost filled index : This given find/extract min in O(1) time
+          --> Insert/Delete : O(k), k is size of list
+
+      --> Binary Heap:
+        -> Works well if we know bound on data size, but can get around by using dynamic array
+        -> Insert : log, Delete : log, extract/Find min : O(1)
+
+
+    	--> Binary search tree (Dictionary):
+        -> for unbounded data and other dictionary operations
+        -> log Insert, Delete, find/extract min
+
+      --> Fibonacci and pairing heaps
+         -> For changing priority 
+
+	--> Use priority queue if there is a mix of add/delete/query.
+	--> For fixed data set, use sorted array. If you use priority queue for this purpose, then you are basically using it to sort these elements. IN that case, quicksort is faster due to lower constant factors

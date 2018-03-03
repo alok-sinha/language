@@ -1,0 +1,9 @@
+
+1. any : Checks list/tuple of any obects and returns if any one is "> 0" or "True" 
+
+2. all : Checks list/tuple of any obects and returns if all of them is "> 0" or "True" 
+
+
+3. zip : 
+    - combines 2 or more set/tuples/list and returns list of tuples of each list/set/tuple
+    - when dictionaries and combined, it combines keys

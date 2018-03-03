@@ -1,0 +1,57 @@
+
+
+Forking Processes:
+   --> Forking is basically copying the program. The program/process which called the fork is copied and run separately. Copy is shallow, i.e. cop on write
+       -> Original program  : parent
+       -> Copied program : child
+          -> Gets copy of global memory, including file descriptors
+       -> os.fork() : Think wrapper over C standard forking calls.
+       -> Since program is copied, it will return in both copies, original and new. To distinguish, parent gets return as child's pid, while child gets 0.
+       -> Windows does not provide forking mechanism, use threads or multiprocessing module which provides runningn forks in portable ways
+       -> Exiting processes : 
+          -> From parent : os.exit(n) #n is status code. os.EX_OK
+          -> From child : os._exit(n) #n is same as above
+       -> exec calls : fork creates a process, but runs the same program. exec can be used to run a different program. The processs is overlayed with the program specified in fork.
+          -> The called programs never returns, because the program which called exec, has been overlayed. There is no one to return to. It is error if exec program returns.
+
+   -->  Other ways to start program in python : 
+       -> os.system
+       -> os.popen
+       -> subprocess
+       -> os.spwanv
+       -> multiprocessing
+
+   --> Zombies           
+
+Threads
+==> Technically, a forked process gets a copy of the original process’s global memory, including open file descriptors. Because of that, global objects like files start out with the same values in a child process, so all the processes here are tied to the same single stream. But it’s important to remember that global memory is copied, not shared; if a child process changes a global object, it changes only its copy
+
+
+
+==> fork/exe combindation : Original program gets overlayed by new new and it never returns. It may return due to error.
+
+==> Threads are sometimes called “lightweight processes,”
+  --> because they run in parallel like forked processes, but all of them run within the same single process. They share address space of process.
+  --> While processes are commonly used to start independent programs, threads are commonly used for tasks such as nonblocking input calls and long-running tasks in a GUI. 
+  --> They also provide a natural model for algorithms that can be expressed as independently running tasks. 
+  --> For applications that can benefit from parallel processing, some developers consider threads to offer a number of
+
+
+==> Issues with threading in python:
+
+  ==> Parallism : Running on multiple core of CPU, doing many different things at same time
+  ==> Concurrency : Running multiple parts of program in parallel. Make different parts of progress at same time.
+
+  ==> Python threads do not provide parallism, because bytecode interpreter can not run in parallel due to GIL. This is to avoid itnterperter stack getting corrupted.
+  ==> Only one python thread runs at a time
+  ==> So why pythin still has threads:
+    -> It makes program seem parellal. This makes program easy to write and understand.
+    -> Works for I/O blocking call. Interpreter reelases the GIL (Global Interpreter Lock, a mutex) before making system call and gets its back as soon as system call is done, hence able to run second thread as soon as first one releases the GIL
+
+  ==> Python provides fairness among different threads. Even though it runs one thread at a time even on a multic-core CPU, it makes sure each thread gets equal time. 
+     --> This means that threads can not assume safe global data handling
+     --> It will suspend each thread arbitarily, thus making making data handling unsafe. 
+     --> So, use of locks is required to avoid such conditions
+
+  ==> Multiprocessing module : Provides potable child process creation to avoid GIL issue, yet makes it look like thread
+

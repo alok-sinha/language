@@ -1,0 +1,61 @@
+1. Memory heirarchy
+2. LinkedList/Stack/Queue problems
+3. Suffix array : reduce q comparison by saving common index
+4. Tournament/kd trees
+5. Heap building with array : last half of array is alread heap. Is it only if n is power of 2.
+6. Set partitioning
+
+
+1. 2 coloring graph : Done
+2. Generate subsets : Done
+3. Can we make quicksort stable by including array position also in comparison
+4. External sorting/k way merge : Done
+5. B trees : For binary search in external memory
+6. Cache oblivious data structure and algorithm : http://erikdemaine.org/papers/BRICS2002/paper.pdf
+7. One sided binary search : Good if key is closer to one side. 
+8. Prefix tree : Trie, Suffix Tree : Trie of all suffixes of words
+9. Use suffix tree to find longest palindrom of a string
+10. Suffix array
+11. Heap building with array : last half of array is alread heap. Is it only if n is power of 2.
+
+
+==> Boyre moore voting alogrith to find majority emelenent
+    -> Majority element will be canceled by other element, but 1
+
+==> Mergesort is in place for linked list based storage
+
+==> Bloom filter:
+   --> Definite no
+   --> may yes
+
+   uses : Disk read -> If there are blocks of numbers of keys, we can rule out of bunch of blocks by looking up bloom filters, and thus expensive disk read 
+
+==> External memory sorting
+   -> Build B-Tree and inorder traversal
+   -> Quicksort + merge
+
+==> Trees:
+   -> Unbalanced tree : Works fine if applications involves random insertion of keys
+   -> Balanced tree : 
+       => AVL/2-3 tree are passe
+       => Red-black tree is more popular
+       => Splay tree: Keeps the recently accessed keys near root, hence better locality performance
+
+==> Finding cycle in graph : For undirected, we must check for parent relation apart from discovered state, because immediate parent in undirected graph will have two way relation. For directed graph, this is not needed.
+
+
+==> Maximum spanning tree : Run minimum spanning tree with negative weights. This however does not work for most of graph alogorithm.
+
+==> MST for products of edge weights : Take log of edge weights and run MST
+
+==> MST : Approximate solutions to hard problems like TSP
+
+==> Union-Find data structure : 
+    -> Split a set into disjoin sets using some criteria - example : split vertices into connected components
+    -> For undirected graph, can be used to 
+        -> detect cycles
+        -> find connected components
+
+
+==> Dijkstra vs Prim's algo:
+     - similar ideas with one difference        

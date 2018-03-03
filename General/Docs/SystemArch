@@ -1,0 +1,4 @@
+
+
+Memory: 
+  ==> Reading data from disk is always done in pages/blocks. You don't read a byte or single integer from disk.

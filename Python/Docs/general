@@ -1,0 +1,23 @@
+
+
+-> Iteration tools:
+   -> for loop
+   -> in membership
+   -> map
+   -> list comprehensions
+
+--> Iterable object: Any sequences:
+   -> Physical : Stored physically in sequence
+   -> Virtual  : produces one result at a time when called by iteration tool like for loop
+
+--> Iteration protocol
+   -> Any object with method "next"/"__next__" or produces a iter() object with next method
+   -> raised StopIteration when there are no more objects
+
+--> Depending on your Python and code, list comprehensions might run much faster than manual for loop statements (often roughly twice as fast) because their iterations are performed at C language speed inside the interpreter, rather than with manual Python code.
+
+
+-> float('inf') -> max Infinite value
+-> float('-inf') -> min infinite value
+
+-> Integeres have infinite precision, while floats dont

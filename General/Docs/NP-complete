@@ -1,0 +1,11 @@
+
+
+-> Problems with polynomial running time O(pow(n,k)): Tractable (easy to handle)
+-> Problems with no polynomial running time : Intractable (hard)
+-> Problems whose status is unknown : NP-Complete
+   -> No polnomial running algo is yet known
+   -> But none such exist is not proven
+
+Class P : Solvable in polynomial time
+Class NP : Verifiable in polynomial time. P is susbet of NP
+Class NP-Complete : 

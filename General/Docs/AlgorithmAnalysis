@@ -1,0 +1,38 @@
+
+
+==> Running time of algorithm is calculated using RAM model of computer
+    --> Single thread of execution, no con-current operations
+    --> Set of realistic instructions in constant time
+    	-> add/subtract/multiply/de...
+    	-> data movement (load, store, copy)
+    	-> control : conditional/unconditinal branch, sub routine call/
+    	-> Some computers have left shift operation in constant time, on such computer, pow(2,k) can be computed in constant time
+
+    -> Each of above instruction will take constant time
+    -> data type : Float and integer
+    -> Limited word size, else we can store entire data in one word and operate in constant time
+    -> Memory heirarchy is ignored : Cache/Virtual memory
+
+==> Reasons to check for worst case analysis:
+    --> We know that we will never get worse than this. No educated guess and hope that we don't get worse than this
+    --> For some algo, worst case happens very often
+    --> Often worst case and average case analysis are same : In some cases, we apply randomized algorithm and calculate expected running time    
+
+==> Order/Rate of growth:
+	--> We pick only leading term and even drop the constant factor. 
+	--> For lower input size a algo with higher leading  term (order of function) may be faster than that of lower leading term, but for larger input size, it will get worse for worse running time
+
+
+==> Asymptotic analysis of algorithm:
+	--> When we look at input sizes large enough to make only the order of growth of the running time relevant, we are studying the asymptotic efficiency of algorithms. That is, we are concerned with how the running time of an algorithm increases with the size of the input in the limit, as the size of the input increases without bound.
+
+==> Amortized analysis : Running time over bunch of runs, including cheaper and costly ones. 
+    -> For example, dynamic array:
+       -> Double size of array on hitting limmit
+       -> so total copies : 1 + 2 + 4 + 8 + 16 = 31, while total write : 2 + 4 + 8 + 16 + 32  = 64 
+       -> for 64 write opns : 64 + 31 = 95  = 1.5*totalWrite
+       -> In general for n copies, u can do 2n writes, -> 1.5n
+       -> On average, half of elements move one, quarter : twice, ....
+          
+
+	

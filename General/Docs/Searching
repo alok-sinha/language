@@ -1,0 +1,21 @@
+
+Problem: Generating m randon integers between [0,max)
+
+ Array : 
+   Move to right place and shift all integers after that to right. Put the new value in hole
+
+ List  : 
+    Move to right place and place the new number being adjusting next pointers.  Even though list does half work, it is slower due to:
+     - take twice as much memory (next pointer). 8 bytes read into cache to access 4 byte number
+     - Array uses contiguous memory. List nodes are random in memory  
+       * Is list access in RAM slower than array?
+
+ 
+ Space allocation:
+    - allocate memory as group at begining as opposed to allocating for each node. Speeds up program.
+
+
+
+
+
+

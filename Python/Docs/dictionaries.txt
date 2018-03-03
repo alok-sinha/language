@@ -1,0 +1,43 @@
+
+* Key can only be unmutable (hashable) objects
+
+* Only built in mapping type
+
+* Unordered tables of object references ( and not object itself) that support access by key.
+
+* Unordered collection of heterogeneous  objects. Sequence operations like concatenation and *slicing don't work.
+
+* Implemented as hash table - Start slow, grows on demand. Hashing is optimized to quicken the retrieval. 
+
+* In table, objects are stored in Pseudo random (arbitrary, varies across release/platform/sessions) order left to right. The keys are ordered to optimize hash lookup.
+
+* in membership : Checks is key is present in dictionary. It keeps key interators and employs fast lookups.
+
+* In list assignment to non-existing offset does not work. While in dictionary, it creates a new entry in table.
+
+* To avoid missing key error, use get method with default value  (without this it will return "None"). 
+
+* update method : values are blindly overwritten for overlapping keys
+
+* value to key mapping : 
+  - If used regulary, implement dictionary in reverse way
+  - else use following to get all the indices  : [ i for i,j in d if j == value]
+
+* Dictionaries as flexible lists:
+   D[99] = 'abc' -> Gives a impression that there are 99 objects. For list 99 objects will need to be allocated. With dictionary, we don't need to create 98 objects.
+   Access can be done using 
+    - get or 
+	- in tests.
+	- try catch exception
+	
+   So if list of sparse, use disctionary instead.
+      
+* Dictionary as sparse multi-dimensional arrays
+  M  = {}
+  M[(2,1,4)] = 100
+
+* Dictionary vs Class : For simpler cases, dictionary is good enough record  
+
+
+
+  

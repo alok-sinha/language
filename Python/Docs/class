@@ -1,0 +1,42 @@
+
+
+==> class/instance is namespace like module in python, but with three capabilities that modules does not have:
+1. Factory : Create multiple instance
+2. Inheritance : Tree of class hierarchy to define class attribute
+3. Operator overloading for built in types
+
+==> There’s nothing magic about a class name. It’s just a variable assigned to an object when the class statement runs, and the object can be referenced with any normal expression.
+
+==> A class always lives in module, follows all rules of module attributes
+
+==> classes are objects, get created by statement class
+
+==> Class attribute gets inheriated in instance object. Instance can have their attributes which other instanc of same class will not have
+
+==> Every class method gets "self" as the instance object being operated on (attribute or method). All operations happens in context of this instance object
+
+
+==> Class/Instance attributes and methods can be created on fly.  When a method is attached to class, it automatically adds the "self" variable in the method. 
+
+
+==> There is no private concept in python. An attribute can be changed inside class method, or outside it using instance variable
+    
+    x.setData("tmp") # setData is method which does self.a = "tmp"
+    x.a = "tmp"
+
+    privacy -> attribute access operator overloading
+
+
+Inheritance:
+
+  ==> Instance inherit from class, which inherit from superclasses : Note that this is unlike Java/C++ where instance have nothing on their own. In  this sense, instance in python feels more like classes themselves. In fact, all of instance,class, superclass behave same because all of them are really objects.
+
+  ==> Specially named methods (__X__) get inherited by subclass.
+  ==> Special names methods are not reserved keywords
+
+  ==> Attributes of a namespace like class is stored in __dict__ attribute of the namespace. Any attribute can be looked up:
+      1. using "." object notation, e.g. x.name  -> This kicks off inheritance serach up the class tree
+      2. or using dictionary : x__dict__["name"] -> Looks only locally in the object/class 
+  ==> To fetch the parent class -> x.__class__    
+
+

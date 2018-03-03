@@ -1,0 +1,10 @@
+
+
+==> Numbers
+	--> Immutable
+	-> Integers - inifinte precision
+	-> float (implemented as C double)
+	-> complex numbers 
+	-> module based type : decimal and fraction	
+	   -> Decimal is used to get around the inaccuracies of floating point 
+==>

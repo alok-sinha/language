@@ -1,0 +1,47 @@
+
+
+Questions:
+  - what is asymptotically tight time?
+  - how short is n good for insertion sort
+
+
+Insertion sort - n**2. 
+  - Best case n, if all numbers are already sorted.
+  - In place
+  - good for shorter input (upto 20-30 items?)
+
+ 
+ HeapSort:
+
+ - heapsort : Always nlog(n), but quicksort is nlog(n) in average case. Yet heapsort is slower because number of comparisions and swaps. So both are nlog(n), but quicksort has smaller constant factor due to lesser number of swaps and comparison.
+ - root of tree is taken at index 1, instead of 0. This makes parent child relationship easier. 
+   child = 2*child, 2*child+1
+   parent = child/2
+ - use maxheap for sorting : Pop from top and put it in bottom for in-place algorithm
+ - when converting array to heap in place, we start off from half way mark, since rest half are leaf and they are one element heap  
+ - Building heap from unsorted array -> O(n) asymptotically bound
+ 
+ Quicksort:
+
+ -> Average run time is closer to best (nlog(n)) then worst (n^2). 
+    The running time is therefore O.n lg n/ whenever the split has constant proportionality.
+. 
+ - Randomized quicksort is nlog(n) on average, but varies run to run. Some run can be as worst as n**2
+ - If nlog(n) needs to be guaranteed every run, use heapsort, else use quicksort
+
+ 
+ MergeSort:
+  - merge stage : placing a sentinal value at end of each list saves check for length comparision. Set the a very large value in sentinal, so that when one list finishes non-sentinals, it never passes through that sentinal values, while elements of other list gets popped out and stored in output array.
+
+
+===> Linear time sort
+  --> Counting sort : Assumes input are integers are from set(range(n))
+  --> Radix sort
+  --> Bucket sort : 
+  	 --> Assumes input has uniform distribution. Else it will reduce to insertion/quick or whatever is used to sort the elements in bucket
+  	 --> This runs in linear even if not distribution is not uniform, as long as sum of square of bucket size is linear in input
+
+
+
+
+

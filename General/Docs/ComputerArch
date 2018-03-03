@@ -1,0 +1,8 @@
+
+
+
+-> Tge memory hierarchy
+
+-> Typically 4/8 KB is smallest page size available
+   -> in 32 bit address space: 2 10bits each for two phases of virtual tp physical memory translation, and remaining 12 bits for pages, hence 4k size
+-> x86 architecture can support page sizes above 1 MB, if it has Page Size Extension

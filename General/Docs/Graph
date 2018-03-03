@@ -1,0 +1,138 @@
+
+
+==> Adj list vs matrix 
+    --> Matrix : O(1) look for edge between vertices
+    	---> Good choice for dense graph, and also if n <= 100
+	--> Most of graph problems can be solved using adj list, i.e. algorithms where looking up edge between is needed.
+
+==> BFS: 
+  -> basis for Prim's minimum spanning tree, Dijkstra single source shortest path
+  -> produces shortes path : minumum number of edges between source to destination node
+  -> works for both, directed and undirected graph
+  -> Breadth first : Discover all nodes at distance k, before discovering node at k+1
+  -> Color coding:
+  	--> white : Yet to be discovered
+  	--> Black : Discovered and all edges explored
+  	--> Grey  : Discovered, but not all nodes have been explored
+  -> The BFS tree may vary based on in which order edges are traversed. But shortest distance will not change. This means we discover different path between two nodes depending on order of edge traversal, but distance remains same.
+  -> Running time : 
+     Assuming adjacancy list : O(V + E) -> Each node is visited once and on each vertex, all edges are scanned once. Since all edges add up to E, total edge exploration time is O(E) --> Works well for sparse graph
+     Assuming adjacancy matrix : O(V+V), because at every edge, we will be exploring all vertex to see if it has edge to visiting vertex
+             --> Works well for dense graph	
+  ->BFS usages:
+  	-->Shortest path for unweighted graph from a given source 
+  	-->Connected components of undirected graph
+  	--> Two coloring of graph/finding if graph is bipartite
+     	----> During BFS, color each undiscovered node opposite of exploration node. If we discover any colored node of same color, graph can not be two colored, or is not bi-partite	          
+
+
+==> DFS:
+  -> Works both on directed and undirected graph
+  
+  -> Tree edge, Back egde, Forward edge, Cross edge
+    --> Undirected graph has only Tree and back edges. Direct has all 4
+  	--> Depends on (u,v) or (v,u). So for undirected graph, whichever is encountered first, is considered. 
+  -> Start and finish time paranethesis: One of following must hold true for any two vertices u and v
+     -> (u.d, u.f) and (v.d, v.f) are completly disjoint
+     -> one of (u.d, u.f) or (v.d, v.f) completely contained in other
+
+  -> undirected graph do not have any cross and forward edge. This means we never hit a black node in DFS of undirected graph
+  -> Color of vertex in the explored edge indicates type of edge:
+    1. White edge : Tree edge
+    2. Gray : Back edge - Gray vertices form a chain of current exploration (i.e. linear descendents). So if we point to a GRAY egde, we are pointing to a ancestor which is still under processing
+    3. Black : forward or cross
+       --> Edge(u,v) is forward if u.d < v.d. Meaning hitting a already explored vertex which has higher start time. So this black vertex was discovered and explored before we are done with u. Meaning while we are still exploring edges of u, we encountered a vertex which has finished exploration. 
+       --> Edge(u,v) is cross if u.d > v.d : This means that v.d is lying on path which has aready been discovered.             
+  
+  -> Running time : We visit each node exactly once and process each edge exactly once -> O(E + V)
+
+  -> DFS usages:
+  	--> DAG determination for directed graph: Directed graph is acyclic of DFS does not reveal any back edges
+  	--> Topological sort of DAG : 
+    	---> Run DFS
+     	---> Arrange nodes in dscending order of v.f (finish time)
+    --> Articulation node : 
+     	---> Calculate DFS tree
+     	---> Root is articulation node if it has two child
+     	---> All non-leaf node which does not fall into path with back edge
+    --> SCC of directed graph
+     	
+==> Weighted graph algorithms:
+	--> MST : Connected graph with minimum sum of weights. For unweighted graph, it is simply the tree within graph that can be found using BFS/DFS
+		--> Prim
+       * Init : Start from any node. Add it it to Tree mst that we claim to be MST
+       * Add a vertex from outside mst to mst satisfying following condition
+         ** Among all vertex outside mst, this vertex provides the minmum weight edge with one of vertex in mst. So in each iteration, go thrugh all nodes in mst, and pick the minumum weight edge from each node (such that othe end of edge is not in mst), and we we pick the min of all such node as winner, and add corresponding vertex to mst. We repat this till no vertex is left.
+
+         ** At every stage, look for cheapest edge from mst to non-mst set and append the vertex in non-mst set to mst set
+
+         vertices = graph.getVertices()
+         mst = {}
+         while vrtices.length != 0:
+              winningEdge = min(min(edgesOfVertex1NotInMst), min(edgesOfVertex2NotInMst), min(edgesOfVertex3NotInMst) ... min(edgesOfVertexnNotInMst)) /* Current iteration has n edges */
+              addToMst(winningEdge.OtherVertex())
+              vrtices.remove(winningEdge.OtherVertex())
+
+
+		--> Kruskal
+       * Init : Sort edges in non-decreasing order of weight
+       * Init : Put n vertices into n connected component
+       * While we have not one connected component left : Pickup min weight edge, check if vertices of edge belong same connected component. If yes, disacrd the edge, else merge the two conneted component into one component. 
+
+       With union-find data structure, this runs in mLog(m). So this works fast on sparse graph.
+
+    ** While prim grows a given mst by adding min weight edge from existing mst, kruskal, connects disjoint component into one using min weight edge.
+
+    --> MST of geometric points:
+        -> Construct graph in n^2 time, and then run prim/kruskal
+        -> Else, build Delaunay triangulation of points
+
+	--> Union-Find data structure:
+    --> Find cycle in undirected graph
+     * Look for connected component
+     * For all edges in graph, see if vertices are in same component (i.e. they have same parent in union-find). If yes, then graph has cycle.
+    
+    --> Vertex coloring : 
+
+  --> Shortest path from one node
+		---> Dijkstra
+       * Init : Mark all node distances from start node as infinite 
+       * Init : Insert start node in heap (minheap keyed on distance from source)
+       * While heap has node: 
+         * Extract min element = E
+         * For each neighbor N of E, if N is not expolored, distance(E,N) + distance(source+E) > current_distance(N), update distance of N to distance(E,N) + distance(source+E), else leave the distance as it is.
+       --> Difference with prim's algo:  In prim's, we look for next lowest weight edge from set of MST vertices. In this, next vertex which is nearest from source from any of vertex already discovered (which is function of both, min edge weight and distance of vertices from source so far) 
+	
+  	---> Bellman ford
+	
+  --> All pair shortest path
+	    ---> Floyd warshal
+      ---> Use matrix
+      ---> Label each node 1, 2 ... n. For each node in labeled order: Find shartest path between each pair through that node.
+
+
+
+==> Typically, we srart off BFS only from one vertex, and DFS is done from each yet undiscovered vertex. But we typical use of BFS is finding shortest path from a given source and DFS is used to explore everything we can, topological sort, finding cycles and DAG etc.
+   -> BFS produces predecessor tree
+   -> DFS produces predecessor forest comprising of multiple predecessor tree
+
+==> Turning interesting problems into graph problems:
+	--> Configuration explorations:
+		--> Rubik's cube : From a given position, find final solution, if possible :
+			~ Represent each state as graph node
+			~ Connect two node via a edge if one reachable from other
+			~ Now, run DFS from start to final finishing position
+		--> Backtracking problems like power set : Exploring the graph of possible permutations and combinations 
+		--> Dynamic programming problems : 
+		    ---> Nodes are sub problems
+		    ---> Edge from one node to other, if former depends on later
+		    ---> Problem solvable only if graph is DAG  
+
+
+
+Questions:
+  -> in Spanning tree, do we consider node  reachability from each other also? Should every node be reachable from every node? Works fine with undirected graph, but what about directed graph.
+  -> in directed graph, do we consider weakly connected spanning tree?
+
+
+         
