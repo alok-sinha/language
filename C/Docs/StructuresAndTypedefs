@@ -1,0 +1,9 @@
+
+
+--> Namespace in C : Structure, Union and enum tags share same namespace within a scope. They are different from variable namespace. So this is valid within same scope of C program:
+    struct xyz {
+      int a;
+    }
+
+    int xyz;
+

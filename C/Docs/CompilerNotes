@@ -1,0 +1,17 @@
+
+
+--> -g : Debugger support. Without this variable/function will not be loaded in debugger. It makes the executable size bigger, but does not slow down the program
+--> Werror : Treat warning as error
+--> -O3 : Optimization level 3. Variable names may get optimized out - use -O0 in that case.
+
+==> Standards:
+  -> K & R : Reference section acted as standard for writing the compiler -> K & R C.
+  -> ANSI C : Standard developed in 1989. Also called C89.
+  -> ISO C : Standard developed in 1990. Also called C90. 
+  -> ANSI C and ISO C merged together called C89/C90
+  -> C99 : Revision in 1999. 
+    --> C99 goals:
+        --> International programming
+        --> Codify existing practice to address evident deficiencies
+        --> numeric calcilations for scientific and engineering calculations
+  -> C11 : came in 2011      

@@ -1,0 +1,89 @@
+-> 5 different storage classes for variables based on:
+ 	1. Storage duration : How long variable stays in memory
+ 	2. Scope and linkage : Which part of program sees the variable
+
+ -> Sixth type is pointers, which programs you allocate and free 	
+
+ ==> Scope: Regions of program that can access a identifier
+    ---> block scope
+        ---> Any variable appearing in a block. 
+        ---> Function defintiation is also a block and formal parameters come inside that block even they appear before opening braces
+        ---> Older C : You have to declare the variable in begining of block, C99 made is anywhere in block
+        ---> As part of this new feature, C99 expands the concept of a block to include the code controlled by a for loop, while loop, do while loop, or if statement, even if no brackets are used.
+
+        	for (int i = 0; i < 10; i++)     
+        		printf("A C99 feature: i = %d", i);
+
+    ---> Function declaration scope: From the memonet variable is defined till end of declaration
+        ---> Variable names are not requited due to limited scope, unless a variable is used later variables:
+             void func(int m, int n, ar[m][n]); /* Here m and n need to match earlier variable */
+    
+    ---> File/global scope
+        --> Any variable outside of function
+        --> visible from point of definition to end of file
+
+    --> Function scope : For labels used in goto statement
+        --> Available throughout the function irrespective of which block it appears in
+
+ 
+ ==> Linkeage : 3 types:
+     ---> External linkeage : Variable in multi file program
+     ---> Internal linkeage : Single file
+     ---> No linkeage : Block and function declaration scope
+     ---> A variable with file scope : How to dinstinguish interal and external linkeage?
+     	   --> "static" storage class
+
+
+==> Storage duration:
+     ---> Two storage duration : static and automatic(auto)
+     ---> static storage duration : Throughout the program durarion
+     	---> Variables with file scope
+     ---> static keyword in file scope variables indicate linkeage : internal and external. So file scope variable have a implicit static storage duration, and to limit its linkeage to internal to file, use a expliciit static.
+     
+     ---> Note : "static" is both, linkeage specifier for file scope variable, and storage duration specifier. It is used as linkeage specifier for function scope variable.
+
+     --> Variable with block scope : automatic : exist only duration of block execution
+
+
+5 storage classes:
+=================
+
+
+1. Automatic  : Any variable in function header and any block
+   * Duration : Automatic
+   * Scope : block
+   * Linkeage : No
+
+   -> "auto" : Storage class specifier
+
+   --> Not initialized automatically : Will take whatever value stored previously in that memory location
+
+
+
+2. Register automatic
+   -> Similar to auto in class:
+    * Duration : Automatic
+    * Scope : block
+    * Linkeage : No
+
+   --> May be stored in a CPU register for faster access.
+   --> May be : There may not be any more register available: Then it reduces to auto.
+   --> Can't take address of it.
+   --> Function formal paremeters can also be regsiter
+
+3. Static with no linkeage (block static) 
+    * Duration : Static
+    * Scope : block
+    * Linkeage : No
+
+    --> Can not be used for function formal parameters
+
+
+4. Static with internal linkeage
+
+
+5. Static with external linkeage
+    * Duration : Static
+    * Scope : Multiple file
+    * Linkeage : External
+

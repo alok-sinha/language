@@ -1,0 +1,182 @@
+
+
+Special processes:
+  id 0 : swapper/scheduler in kernel space
+  id 1 : init procorss, brings up system after OS bootstrap. Never dies, has superuser previlges. 
+  id 2 : May be pagedeamon (vitual memory)
+
+
+==> fork : 
+  -> Returns child's pid in parent : Parent has no other of obtaining all it's children pid
+  -> Returns parent pid in child : Child can obtain its parent id using getppid(). 
+  --> Child gets copy of parent stack, heap and data. But they share the text segment
+  --> COW(Copy on write)
+     --> Since most of fork is followed by exec call, making a whole copy of parent is waste, since exec will overlay it new program anyways. So right after fork, they still have same heap,stack and data space, but marked read only. Only when one of them modify it, kernel will make a new copy.
+  --> Who executes first after fork : child or parent? No guarantee. Need IPC to synchronize this. Can use signal to synchronize.   
+  --> File descriptors are copied for child. So they will read and write to same files. So if parent and child don't synchronize, they will be intermixing the writes to file. The offset and fd will get updated whenever parent or child reads/writes to it. 
+  --> File locks are not inherited
+  --> pending signals and alarms are not inherited
+
+  fork failures:
+    --> Too many processes in system
+    --> Too many processes for real user id
+
+  vfork:
+    --> Like thread, child uses the parent address space, no copy.
+    --> Child is sure to run before parent. Parent resumes only when child has exit or exec.
+    --> Typically used for exec right after forking...  
+
+  ---> Parent dies before child : kernel goes through all active process and whoever has parent set to this process, their parent is set to 1 (init).
+
+  --> Zombie process :  Kernel stores the pid, termination status(return value) and CPU runetime when a child dies. This is used for wait call parent will make to get child status.
+     If parent does not wait for child, and child dies, child becomes zombie.
+     For childen for whom init became parent because its parent died, init will call wait and fetches the status so that this child does not become zombie.
+
+  --> Parent wait for child to finish: 
+      --> wait/waitpid : Returns with child's status when child finishes
+          --> If child is aleady zombie when this is called, wait returns immedialtly with its status
+          --> If there are multiple children, wait returns if one terminates. wait returns the pid of child it fetched stus.
+      --> Handle SIGCHILD. If wait is called due to recv of SIGCHILD, it will return immediately.   
+      --> waitpid : WNOHANG option will make the wait non-blocking.
+
+  ---> system("cmd") call to  execute a shell command:
+      --> call fork, exec and waitpid to achieve this:
+            child = fork()
+            in child : exec(cmd)
+            in parent : waitpid(child, &status)
+            			return status
+
+Signals:
+========
+
+	-> Interrupt to process about a condition
+	   --> HW/SW exception
+	   --> Kernel generated
+	   --> Use kill to send signals
+
+	-> Three choices to handle signal
+	   --> Ignore (except SIGKILL and SIGSTOP)
+	   --> Catch (except SIGKILL and SIGSTOP)
+	   --> Default:
+	   		--> Terminate
+	   		--> Terminate with core 
+	   		--> Ignore
+
+	--> Catching signals:
+	   --> void (*signal(int signum, void (*signalHandleFunc)(int sig)))(int)  
+	      if typedef void (*SigFunc(int))
+	      	SigFunc *signal(int signum, SigFunc *);
+	      	SIG_DFL : Default handler
+	      	SIG_IGN : Ignore 
+	--> Child inherits the signal despositions of parent since address space is copied
+	
+	--> cc main.c & -> Parent must set the desposition of SIGINT and SIGQUIT to SIG_IGN
+
+Non-reentrant functions ( should not be called from signal handler)
+=======================
+
+   -> Using static or global data structure
+   -> calls malloc/free : If signal handler also calls malloc, while signal handler was called in middle of malloc, result would be corrupted memory
+   -> Calls standard I/O library
+
+==> Signal stages:
+   -> Generation : Signal even occurs and kernel sets a flag in process table
+   -> Pending : Waiting for action to be taken
+   -> Delivered : When action is taken
+
+==> Signal blocking:
+   -> sigprocmask : Examine and chnage the blocked signals
+   -> sigoending : Check which signals and blocked and pending
+   -> Depending on system, signal can queued or delivered once if multiple instance of signal occurs
+   -> If multiple signals are pending : They can delivered in any order. Maybe related to current signal is delivered first (SIGSEGV)
+
+==> Sending signals:
+    int kill (pid_t, int signo) 
+    int raise(int signo) => kill(getpid(), signo) /* Signal to itself */
+    -> Sending persmission : Can send to porcess only if recv process has same real/effective user id
+
+==> alarm:
+    -> set timer to expire
+    int alarm(int seconds);
+==> pause:
+    int pause();
+    suspends process untill a singal is caught, handled and returned from handler
+
+==> sigaction : Supersedes signal function
+
+
+==> Threads and Signals:
+    ---> THreads share signal handler. So if one thread changes the handler, it changes for all threads under the process
+    ---> But they have their own signal masks
+    ---> Signal is delivered to one thread
+    ---> Who gets the signal : Any one, arbitrarily chosen, except for HW related signals like HW fault or expriting timer whichs is delivered to thread causing such event.
+    ---> pthread_sigmask to block signals
+    ---> sigwait to wait for a signal
+    ---> Sending signal to thread: pthread_kill(pthread_t tid, int signo)
+
+
+Posix Threads:
+
+--> pthread_t could be a structure depending implementation
+1. pthread_t pthread_self(void)   : Pick up job for onself.
+   if (pthread_self() == targetThread) {
+      do_work();
+   } 
+2. int pthread_equal(pthread_t p1, pthread_t p2)
+
+3. pthread_create (pthread_t *, pthread_attr_t *, void *(*func)(void *), void *arg);
+   -> calling thread's address space, signal mask. But pending signals are cleared.
+
+4. If a thread exists by calling exit, _exit, or _Exit calls, it will terminate the calling process itself. Same is true for signals which has action set as terminat.
+
+5. Safe termination of threads:
+   a. pthread_exit(void *ret_val);
+   b. normal return from function
+   c. Thread is canceled by some thread in same process.
+
+6. Waiting for thread to finish:
+   pthread_join(pthread_t, ratval **);
+   -> retaval if not NULl is set to return value 
+   -> if thread was canceled it is set to PTHREAD_CANCELED.
+   -> If thread is already detached, it returns EINVAL immediately
+
+7. int pthread_cancel(pthread_t)       
+	-> called thread may elect to ignore this or decide how it will be canceled
+
+8. pthread_cleanup_push(), pthread_cleanup_pop() : handlers to be called before thread exits
+
+9. pthread_detach(pthread_t )
+
+
+IPC
+===========
+
+==> Pipe : Half duplex, int pipe (int fd[]). 
+     --> reader closes fd[1], which is writing side
+     --> Writer closes fd[0], which si reading side
+     --> This works only between related processes.
+==> FIFO : Named pipes, 
+     --> Works across any processes. Uses filename path to relate
+
+==> Semaphore: 
+    --> Counter for shared resource access different processes
+    --> Following needs to be atomic process
+        --> testing semaphore value
+        --> Decrementing to claim a semaphore
+        --> Hence semaphore is controller by kernel.
+==> Shared memory:
+    --> Fastest way of IPC since no data is copied between processes.
+    --> Synchronize using semaphore
+
+
+
+Synchronization
+
+==> use pthread_cond_broadcast instead of pthread_cond_signal : cond_signal will deliver only to one thread
+==> if thread or process exit while holding a lock, it will never be released. OS can not cleanup it up
+==> A way out is to have handler on thread/process forced termination                 
+
+
+
+
+

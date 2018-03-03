@@ -1,0 +1,86 @@
+
+Operations with pointers:
+ 
+ --> Assignment : 
+    --> Address to a pointer : Should be compatible with pointer type. Can't assign address of double to int pointer.
+    --> to a array
+
+ --> * : Dereferencing : Finding value at a pointer address location  
+
+ --> Pointer address: 
+    --> Pointer itself has a address, that is the location where address which pointer points is stored.
+        int *p;
+        &p -> Address where p is stored. At that location, p is stored, meaning &p is memory locatopn where address which p points to is stored.
+        &p = 0x0012ff34
+        p = 0x0012ff38
+        0x0012ff34 stores the value 0x0012ff38
+ --> Adding int to pointer:
+     type_t *p
+     p + i -> p + i*sizeof(type_t) or p[i];
+
+
+=======================        
+--> If you init a auto array partially, rest of members are set to 0. But if not, it has garbage
+--> use empty number in array and init it : compiler will count and set the size
+     int a[] = {1,2,3,4,5}
+     numOfElements = sizeof(a)/sizeof(a[0]);
+
+--> Char char init : 
+
+--> int a[] and  int *a are same only in functon formal parameters, no where else. 
+    --> All 4 are same: 
+      ---> int sum(int *ar, int n); 
+           int sum(int *, int); 
+           int sum(int ar[], int n); 
+           int sum(int [], int);
+
+
+--> C99 : array element can be init partially:
+    int a[6] = {[5] = 10}; /* elements 0 to 4 are init to 0 */
+        int days[MONTHS] = {31,28, [4] = 31,30,31, [1] = 29};
+    1. 4 onwards gets init to three values
+    2. if a index is init again, it takes latest value ([1])
+
+--> int a[]= {1,2,3,4,5,6};
+     printf ("\n%d", sizeof(a)); -> Prints 24, but when passed in function, it is passed as pointers, so
+     void func (int a[]) {
+	    printf("\n%d", sizeof(a)); -> Will print 8/4 , i.e. pointer size. Here a is pointer to first element.
+    } 
+
+--> Following are not allowed:
+    --> int a1[10], a2[10];
+        a1 = a2;
+    --> a1 = {1,2,3,4,5};  /* In middle of program */
+
+--> Why C compilers don't check for array bounds:
+   --> To make program faster : else it will have to put run time check to see if arrays are in bound. This is because index may be determined only run time.
+   --> So C trust programs in exchnage of faster program
+
+--> Array size specification (before C99):
+   --> any constant or consant expression
+   --> sizeof is constant expression, but const (C++ allows it) is not
+
+--> C99 : Variable Length array:
+	--> int a[m];           
+
+
+===>2 D array
+   --> Read left to right
+   --> int a[5][10] : 5 element array where each element is array of 10 integers
+
+===>
+   --> total += *start++; /* ++ applies to start, not *start. And postfix means first get value of *start and add it to total and then incrment start
+       total += *++start; /* ++ applies to start, not *start. And prefix means first increment start, then get value of *start 
+
+   ---> ar[i] and *(ar + i) are equivalent and works for both array and pointers
+   ---> ar ++ onlyworks for pointer
+   ---> Following are prohibited:
+        int *p1, *p2;
+
+          p1 = p1 + p2;
+          p1 = p2*10;    
+===> Use const in format parameter if array is not to be modified. The original array passed to this function need not be const. Same array can be passed to one function as const, and other to non const
+
+==> strlen is run time, it will not include '\0' terminating char for string. sizeof is compile time, it will cound '\0' also.
+
+
