@@ -1,0 +1,30 @@
+
+
+--> Selecting a solution from solution space randomly
+--> Two needs:
+   --> Space represenation : Like array : Put nodes of visiting nodes in array for TSP
+   --> Cost function : Calculate the cost for a given solution that we are trying to optimize
+
+--> Random sampling of solution
+   -> Construct solution, and return success as soon as we find good enough solution
+   -> Solution should be uniform distribution : ALl solution should be equally likely
+
+  --> When random sampling work:
+   --> When high number of acceptable solution
+  		 --> Prime numbers : 
+      		--> Roughly 1 out of ln(n) numbers are prime , between 2 and n.
+   --> When no sense of coherance in solution space : No way to relate soluitions, completely random
+   --> TSP does poorly, since there are many moderate/bad solutions   		
+
+	-->Generate two pairs of vertices
+   	-> generate two intergers between (1,n) : if equal, try again
+
+--> Local search
+   -> Start from a random solution, and look at neighboring solutions. If better found, move to it. You stop when you are sorrounded by worse solutions - king of the hill..
+      --> Can try to start off from a diferent point
+   -> Hill climbng : 
+   --> When local search works:
+      --> solution space is convex : There is one hill top. Like binary search
+      --> Cost of incremental solution is more than global maxima
+      --> Works better than random sampling on TSP
+
