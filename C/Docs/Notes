@@ -1,4 +1,4 @@
--> 5 different storage classes for variables based on:
+ -> 5 different storage classes for variables based on:
  	1. Storage duration : How long variable stays in memory
  	2. Scope and linkage : Which part of program sees the variable
 
