@@ -1,4 +1,8 @@
 
+==> Variables and Objects:
+   --> Variables are just name, they don't refer to a memory location. Instead they point to a object.
+   --> The pointing from variable from object is done using pointer
+   
 
 -> Iteration tools:
    -> for loop
