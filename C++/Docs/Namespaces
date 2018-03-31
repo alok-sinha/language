@@ -1,0 +1,17 @@
+
+Traditional C++ namespace
+-------------------------
+
+==> Declarative region : Space where a declaration can be made. File, function, blocks, ...
+==> Potential scope : From point of declaration to end of declarative region
+==> (Actual)Scope : Potentual scope - any region where declration gets overshadowed 
+
+==> New namespace features:
+   --> Define new declarative region using names namespace
+   --> Can only be defined in global scope and within on other namespace. Can not be in block
+   --> External linkeage by default
+   --> Global namespace : File level declrative region
+   --> Namespaces are open : Can add names to existing namespaces
+   --> Accessing names from namespaces : Scope-resolution operator "::". This is called qualified names.
+
+
