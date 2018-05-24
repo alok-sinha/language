@@ -1,0 +1,56 @@
+
+  => 4 categories
+    ==> Basic
+         ===> numbers
+              ====> Several sizes of integer
+                    -> 4 signed integers : 8,16,32,64 bits
+                    -> 4 unsigned integers : 8,16,32,64 bits
+                    -> int : platform/compiler dependent 32 or 64 bits
+                    -> uint : platform/compiler dependent 32 or 64 bits
+                       --> Both int and uint have same size 32/64
+                    -> int32 == rune (Unicode code point)
+                    -> byte == int8 (value is piece of raw of data)
+                    -> uintptr : can hold all bits of pointer value. Width is not specified. Could be same as
+                    -> int, uint, uintptr are different type for from int32, uint32, uint32 or int64, uint64, uint64 even if they are same size and server same purpose : Explicit type converion is required.
+                    -> Signed number : 2's complement    
+              ====> Floating points of 
+              ====> Complex numbers
+         ===> booleans
+         ===> string
+    ==> Aggregate
+         ===> Arrays : 
+              --> Homogeneous, fixed size
+              --> Default value is 0 (0 for number, null for reference and false for boolean)
+              --> Array size must be constanct : Computed at compile time
+              --> Size of array is part of type, so a[3] int is different from a[4] int
+              --> Array init:
+                  --> Literals Arr[3] int = [3]int{1,2,3}
+                  --> Pair init with index : Arr[4] int {0:10, 1:20, 2:30}. Index 4 is 0.
+         ===> Structs : Hetrogeneous, fixed size
+    ==> Reference 
+         ===> Pointers
+         ===> Slices
+             --> Variable length sequence whose all elements are same
+             --> []T : Array without size, T is type of element
+             --> Associated to underlying array
+             --> Lightweight data structure that gives access to subsequence of underlying array
+             --> Three components : 
+                  ---> pointer : Pointer to first element of slice, or pointer to array elementn where slice starts
+                  ---> length : Number of elements in slice, 
+                  ---> capacity : Max elements slice can have, starting from slice first element to max number of underlying array
+             --> Same underlying array can be shared by multiple slices
+             --> When slice is passed as function parameter, it passes the underlying array pointer. So slice can be modidied in the function.     
+
+         ===> Maps
+         ===> Functions
+         ===> Channels
+    ==> interface
+
+   => Comparable
+       -> == and != are applicable. 
+       -> all basic types are comparable - string, numeric, boolean
+   => oderability
+       -> <, >, <=, >= 
+       -> integers, floating-point, string are ordeered
+       -> many other types are not ordered  
+

@@ -1,0 +1,28 @@
+-> Place where a name is first assined determines the namespace that it will bind to and its visibilty. In python names are defined and declared by assignment. 
+-> Functions add a namespace : All names assigned inside function is associated with that function namespace
+     -> name inside function is not visible outside
+     -> name defined outside function (global or in other functions) do not clash with name in function. Function name hides the names from outside.
+
+
+==> Local scope and Global scope   
+
+  --> modules define global scope. module variables/names are global variables and vice versa
+  --> global == module. Global does not mean across application. To use a variable in one file from other file, you must import that module.
+  --> All names in function are local scope, unless declared
+      --> global
+      --> non local in enclosing function def
+      --> or is python built-in    
+  --> It is the function call which creates the function scope. Each call creates a new one.
+
+  --> Python interactive prompt is a module named "__main__". All names created inside lives in this module.
+  --> In place name changes to object is not local. 
+       L = []
+       def f():
+       	L.append(X) #Modifies global L. It does not create local L. L is found in global and will be modified. Note that global keyword is optional, it is not required to access a global object. It is just used to resolve conflict.
+
+ --> 
+    x = 1000
+
+    def findAllString(l, i, j):
+      x = x*2 # This does not work because when we say "x=", it creates a new local variable, and when it evaluates x*2 right side, it finds x to be a local variable which has not value yet.
+      print(x)
