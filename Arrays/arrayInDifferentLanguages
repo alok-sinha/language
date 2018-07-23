@@ -1,0 +1,49 @@
+
+Array/Pointer/References
+
+GO
+   -> Homogenous elements like C, but each array size is different type
+   -> Slices for variadic array
+   -> Pointer can not point to it
+   -> Static in size 
+   -> int[] is slice and int[3] is array
+ 
+Python
+   -> No native array type, lists
+   -> hetrogenous : May contain different types
+   -> Implemented as object underneath 
+   -> Dynamic size 
+   *Numpyy
+
+C/C++
+   -> Homogenous elements
+   -> array varialble can rvalue, pointers can be assigned array variables
+   -> Static in size
+   -> int[] and int[3] coule mean samne thing in function parameters
+
+Java
+   -> Homogenous elements
+   -> No pointer assignment
+   -> Static in size
+
+Javscript
+
+
+--> Loops : for/while
+
+--> Conditions : if-else/switch
+
+--> Basic types
+
+--> Composite types
+   --> Array
+   --> Srting
+   --> Structure/Union
+
+--> OOP
+   --> Classes/Objects
+   --> Inheritance
+   --> Encapsulation
+   --> 
+
+
